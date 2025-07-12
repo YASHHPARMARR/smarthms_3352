@@ -157,6 +157,7 @@ const AdminDashboard = () => {
               <QuickActionsPanel />
             </div>
           )}
+                                                                                                                      console.log("🧠 userProfile:", userProfile);
 
           {/* Auth Status Debug Info (Development Only) */}
           {process.env.NODE_ENV === 'development' && (

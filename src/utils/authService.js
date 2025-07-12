@@ -31,39 +31,28 @@ class AuthService {
   }
 
   // Sign up with email and password
-  async signUp(email, password, userData = {}) {
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email: email?.trim(),
-        password,
-        options: {
-          data: {
-            full_name: userData?.fullName || userData?.full_name || '',
-            role: userData?.role || 'guest'
-          }
+async signUp(email, password, userData = {}) {
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email: email?.trim(),
+      password,
+      options: {
+        data: {
+          full_name: userData?.fullName || userData?.full_name || '',
+          role: userData?.role || 'guest'
         }
-      });
-
-      if (error) {
-        return { success: false, error: error.message };
       }
+    });
 
-      return { success: true, data };
-    } catch (error) {
-      if (error?.message?.includes('Failed to fetch') || 
-          error?.message?.includes('AuthRetryableFetchError')) {
-        return { 
-          success: false, 
-          error: 'Cannot connect to authentication service. Your Supabase project may be paused or inactive. Please check your Supabase dashboard and resume your project if needed.' 
-        };
-      }
-      
-      return { 
-        success: false, 
-        error: 'Something went wrong during signup. Please try again.' 
-      };
+    if (error) {
+      return { success: false, error: error.message };
     }
+
+    return { success: true, data };
+  } catch (error) {
+    ...
   }
+}
 
   // Sign out
   async signOut() {
